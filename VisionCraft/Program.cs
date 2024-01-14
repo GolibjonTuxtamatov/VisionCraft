@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<StorageBroker>();
 
-builder.Services.AddTransient<IOpenAIBroker, OpenAIBroker>();
+AddBrokers(builder);
 
 var app = builder.Build();
 
@@ -26,3 +26,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+static void AddBrokers(WebApplicationBuilder builder)
+{
+    builder.Services.AddTransient<IOpenAIBroker, OpenAIBroker>();
+    builder.Services.AddTransient<IStorageBroker, StorageBroker>();
+}
