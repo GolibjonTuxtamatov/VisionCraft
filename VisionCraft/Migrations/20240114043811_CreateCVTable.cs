@@ -16,9 +16,9 @@ namespace VisionCraft.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Conclusion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Result = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Conclusion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Result = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
                 },
                 constraints: table =>
                 {
