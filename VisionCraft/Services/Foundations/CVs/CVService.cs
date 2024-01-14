@@ -16,7 +16,7 @@ namespace VisionCraft.Services.Foundations.CVs
         }
 
         public ValueTask<CV> AddCVAsync(CV cv) =>
-            throw new NotImplementedException();
+            this.storageBroker.InsertCVAsync(cv);
 
     }
 }
