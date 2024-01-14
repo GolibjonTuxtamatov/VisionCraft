@@ -12,7 +12,7 @@ using VisionCraft.Brokers.Storages;
 namespace VisionCraft.Migrations
 {
     [DbContext(typeof(StorageBroker))]
-    [Migration("20240114041218_CreateCVTable")]
+    [Migration("20240114043811_CreateCVTable")]
     partial class CreateCVTable
     {
         /// <inheritdoc />
@@ -32,14 +32,12 @@ namespace VisionCraft.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Conclusion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Result")
+                    b.Property<decimal?>("Result")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
