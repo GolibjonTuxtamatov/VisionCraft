@@ -1,9 +1,10 @@
 ﻿using EFxceptions;
 using Microsoft.EntityFrameworkCore;
+using VisionCraft.Models.CVs;
 
 namespace VisionCraft.Brokers.Storages
 {
-    public partial class StorageBroker : EFxceptionsContext
+    public partial class StorageBroker : EFxceptionsContext, IStorageBroker
     {
         private readonly IConfiguration configuration;
 
@@ -11,6 +12,15 @@ namespace VisionCraft.Brokers.Storages
         {
             this.configuration = configuration;
             this.Database.Migrate();
+        }
+
+        public async ValueTask<T> InsertAsync<T>(T @object)
+        {
+            using var broker = new StorageBroker(this.configuration);
+            broker.Entry(@object).State = EntityState.Added;
+            await broker.SaveChangesAsync();
+
+            return @object;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
