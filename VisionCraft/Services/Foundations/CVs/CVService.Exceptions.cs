@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using EFxceptions.Models.Exceptions;
+using Microsoft.Data.SqlClient;
 using VisionCraft.Models.CVs;
 using VisionCraft.Models.CVs.Exceptions;
 using Xeptions;
@@ -30,6 +31,13 @@ namespace VisionCraft.Services.Foundations.CVs
 
                 throw CreateAndLogCriticalException(failedStorageCVException);
             }
+            catch(DuplicateKeyException duplicateKeyException)
+            {
+                var alreadExistCVException =
+                    new AlreadyExistCVException(duplicateKeyException);
+
+                throw CreateAndLogDependencyValidationException(alreadExistCVException);
+            }
         }
 
         private CVValidationException CreateAndLogValidationException(Xeption exception)
@@ -48,6 +56,15 @@ namespace VisionCraft.Services.Foundations.CVs
             this.loggingBroker.LogCritical(cVDependencyException);
 
             return cVDependencyException;
+        }
+
+        private CVDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var cvDependencyValidationException = new CVDependencyValidationException(exception);
+
+            this.loggingBroker.LogError(cvDependencyValidationException);
+
+            return cvDependencyValidationException;
         }
     }
 }
