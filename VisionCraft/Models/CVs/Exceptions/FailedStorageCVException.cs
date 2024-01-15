@@ -5,7 +5,7 @@ namespace VisionCraft.Models.CVs.Exceptions
     public class FailedStorageCVException : Xeption
     {
         public FailedStorageCVException(Exception innerException)
-            :base("Failed storage error occured.")
+            : base("Failed storage error occured.")
         { }
     }
 }

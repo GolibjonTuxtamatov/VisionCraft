@@ -1,10 +1,5 @@
-﻿using System.Reflection.PortableExecutable;
-using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Parser;
-using OpenAI_API;
+﻿using OpenAI_API;
 using OpenAI_API.Chat;
-using OpenAI_API.Completions;
-using OpenAI_API.Models;
 using VisionCraft.Models.OpenAIs;
 using VisionCraft.Models.Requirements;
 

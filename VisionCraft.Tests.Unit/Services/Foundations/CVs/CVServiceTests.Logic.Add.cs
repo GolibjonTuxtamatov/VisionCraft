@@ -3,7 +3,6 @@ using Force.DeepCloner;
 using Moq;
 using VisionCraft.Models.CVs;
 using Xunit;
-using Xunit.Sdk;
 
 namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
 {

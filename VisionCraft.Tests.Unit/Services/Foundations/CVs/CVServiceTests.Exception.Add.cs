@@ -5,7 +5,6 @@ using Moq;
 using VisionCraft.Models.CVs;
 using VisionCraft.Models.CVs.Exceptions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
 {
@@ -40,7 +39,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(expectedCVDependencyException)))
-                    ,Times.Once);
+                    , Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

@@ -1,5 +1,4 @@
-﻿using System.Data;
-using VisionCraft.Models.CVs;
+﻿using VisionCraft.Models.CVs;
 using VisionCraft.Models.CVs.Exceptions;
 
 namespace VisionCraft.Services.Foundations.CVs

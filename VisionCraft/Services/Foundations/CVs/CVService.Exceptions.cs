@@ -24,21 +24,21 @@ namespace VisionCraft.Services.Foundations.CVs
             {
                 throw CreateAndLogValidationException(invalidCVException);
             }
-            catch(SqlException sqlException)
+            catch (SqlException sqlException)
             {
                 var failedStorageCVException =
                     new FailedStorageCVException(sqlException);
 
                 throw CreateAndLogCriticalException(failedStorageCVException);
             }
-            catch(DuplicateKeyException duplicateKeyException)
+            catch (DuplicateKeyException duplicateKeyException)
             {
                 var alreadExistCVException =
                     new AlreadyExistCVException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadExistCVException);
             }
-            catch(Exception serviceException)
+            catch (Exception serviceException)
             {
                 var failedServiceException = new FailedServiceException(serviceException);
 
