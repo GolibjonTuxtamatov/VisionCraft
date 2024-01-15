@@ -8,10 +8,13 @@ namespace VisionCraft.Brokers.Storages
         public DbSet<CV> CVs { get; set; }
 
 
-        public ValueTask<CV> InsertCVAsync(CV cv) =>
-            InsertAsync(cv);
+        public async ValueTask<CV> InsertCVAsync(CV cv) =>
+            await InsertAsync(cv);
 
         public IQueryable<CV> SelectAllCVs() =>
             SelectAll<CV>();
+
+        public async ValueTask<CV> SelectCVByIdAsync(Guid id) =>
+            await SelectAsync<CV>(id);
     }
 }
