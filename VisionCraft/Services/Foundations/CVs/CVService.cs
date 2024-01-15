@@ -5,7 +5,7 @@ using VisionCraft.Models.CVs.Exceptions;
 
 namespace VisionCraft.Services.Foundations.CVs
 {
-    public class CVService : ICVService
+    public partial class CVService : ICVService
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -16,24 +16,13 @@ namespace VisionCraft.Services.Foundations.CVs
             this.loggingBroker = loggingBroker;                                                                                                                             
         }
 
-        public async ValueTask<CV> AddCVAsync(CV cv)
-        {
-            try
+        public ValueTask<CV> AddCVAsync(CV cv) =>
+            TryCatch(async () =>
             {
-                if (cv == null)
-                    throw new NullCVException();
+                ValidateCVNotNull(cv);
 
-                return await this.storageBroker.InsertCVAsync(cv);
-            }
-            catch (NullCVException nullCVException)
-            {
-                var cvValidationException = new CVValidationException(nullCVException);
-
-                this.loggingBroker.LogError(cvValidationException);
-
-                throw cvValidationException;
-            }
-        }
+                return  await this.storageBroker.InsertCVAsync(cv);
+            });
 
     }
 }
