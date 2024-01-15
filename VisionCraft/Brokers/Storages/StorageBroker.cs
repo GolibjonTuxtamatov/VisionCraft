@@ -1,6 +1,5 @@
 ﻿using EFxceptions;
 using Microsoft.EntityFrameworkCore;
-using VisionCraft.Models.CVs;
 
 namespace VisionCraft.Brokers.Storages
 {
