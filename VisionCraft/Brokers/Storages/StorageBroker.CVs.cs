@@ -10,5 +10,8 @@ namespace VisionCraft.Brokers.Storages
 
         public ValueTask<CV> InsertCVAsync(CV cv) =>
             InsertAsync(cv);
+
+        public IQueryable<CV> SelectAllCVs() =>
+            SelectAll<CV>();
     }
 }
