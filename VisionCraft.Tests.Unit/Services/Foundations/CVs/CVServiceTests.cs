@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using VisionCraft.Brokers.Loggings;
@@ -30,6 +32,8 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
                 loggingBroker: loggingBrokerMock.Object);
         }
 
+        private static SqlException GetSqlException() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
         private Expression<Func<Exception, bool>> SameExceptionAs(Xeption exception) =>
             actualException => actualException.SameExceptionAs(exception);
