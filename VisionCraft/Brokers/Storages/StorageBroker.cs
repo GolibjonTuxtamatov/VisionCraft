@@ -29,6 +29,13 @@ namespace VisionCraft.Brokers.Storages
             return broker.Set<T>();
         }
 
+        public async ValueTask<T> SelectAsync<T>(params object[] @objectId) where T : class
+        {
+            using var broker = new StorageBroker(this.configuration);
+
+            return await broker.FindAsync<T>(@objectId);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectionString = this.configuration.GetConnectionString("DeafultConnection");
