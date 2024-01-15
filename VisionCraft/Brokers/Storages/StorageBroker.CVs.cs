@@ -16,5 +16,8 @@ namespace VisionCraft.Brokers.Storages
 
         public async ValueTask<CV> SelectCVByIdAsync(Guid id) =>
             await SelectAsync<CV>(id);
+
+        public async ValueTask<CV> DeleteCVAsync(CV cv) =>
+            await DeleteAsync(cv);
     }
 }
