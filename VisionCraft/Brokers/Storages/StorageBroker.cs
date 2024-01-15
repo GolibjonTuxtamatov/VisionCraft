@@ -22,6 +22,13 @@ namespace VisionCraft.Brokers.Storages
             return @object;
         }
 
+        public IQueryable<T> SelectAll<T>() where T : class
+        {
+            using var broker = new StorageBroker(this.configuration);
+
+            return broker.Set<T>();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectionString = this.configuration.GetConnectionString("DeafultConnection");
