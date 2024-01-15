@@ -1,5 +1,6 @@
 using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.OpenAIs;
+using VisionCraft.Brokers.Pdfs;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.OpenAIs;
 using VisionCraft.Services.Foundations.CVs;
@@ -36,4 +37,5 @@ static void AddBrokers(WebApplicationBuilder builder)
     builder.Services.AddTransient<IOpenAIBroker, OpenAIBroker>();
     builder.Services.AddTransient<IStorageBroker, StorageBroker>();
     builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
+    builder.Services.AddTransient<IPdfBroker, PdfBroker>();
 }
