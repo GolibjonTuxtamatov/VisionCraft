@@ -56,7 +56,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
 
             invalidCVException.AddData(
                 key: nameof(CV.Id),
-                values: "Id id required");
+                values: "Id is required");
 
             var expectedCVValidationException =
                 new CVValidationException(invalidCVException);

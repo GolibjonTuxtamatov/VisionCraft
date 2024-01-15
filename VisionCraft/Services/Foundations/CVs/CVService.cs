@@ -19,7 +19,7 @@ namespace VisionCraft.Services.Foundations.CVs
         public ValueTask<CV> AddCVAsync(CV cv) =>
             TryCatch(async () =>
             {
-                ValidateCVNotNull(cv);
+                ValidateOnAdd(cv);
 
                 return  await this.storageBroker.InsertCVAsync(cv);
             });

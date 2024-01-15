@@ -18,6 +18,10 @@ namespace VisionCraft.Services.Foundations.CVs
             {
                 throw CreateAndLogValidationException(nullCVException);
             }
+            catch (InvalidCVException invalidCVException)
+            {
+                throw CreateAndLogValidationException(invalidCVException);
+            }
         }
 
         private CVValidationException CreateAndLogValidationException(Xeption exception)
