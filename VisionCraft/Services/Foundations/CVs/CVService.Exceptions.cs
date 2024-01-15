@@ -38,6 +38,12 @@ namespace VisionCraft.Services.Foundations.CVs
 
                 throw CreateAndLogDependencyValidationException(alreadExistCVException);
             }
+            catch(Exception serviceException)
+            {
+                var failedServiceException = new FailedServiceException(serviceException);
+
+                throw CreateAndLogServiceException(failedServiceException);
+            }
         }
 
         private CVValidationException CreateAndLogValidationException(Xeption exception)
@@ -65,6 +71,14 @@ namespace VisionCraft.Services.Foundations.CVs
             this.loggingBroker.LogError(cvDependencyValidationException);
 
             return cvDependencyValidationException;
+        }
+
+        private CVServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var cvServiceException = new CVServiceException(exception);
+            this.loggingBroker.LogError(cvServiceException);
+
+            return cvServiceException;
         }
     }
 }
