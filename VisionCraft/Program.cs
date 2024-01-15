@@ -4,6 +4,9 @@ using VisionCraft.Brokers.Pdfs;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.OpenAIs;
 using VisionCraft.Services.Foundations.CVs;
+using VisionCraft.Services.Foundations.Pdfs;
+using VisionCraft.Services.Proccessings.CVs;
+using VisionCraft.Services.Proccessings.Pdfs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StorageBroker>();
 
 AddBrokers(builder);
-
-builder.Services.AddTransient<ICVService, CVService>();
+AddServices(builder);
 
 var app = builder.Build();
 
@@ -38,4 +40,12 @@ static void AddBrokers(WebApplicationBuilder builder)
     builder.Services.AddTransient<IStorageBroker, StorageBroker>();
     builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
     builder.Services.AddTransient<IPdfBroker, PdfBroker>();
+}
+
+static void AddServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddTransient<ICVService, CVService>();
+    builder.Services.AddTransient<IPdfService, PdfService>();
+    builder.Services.AddTransient<IProccessingPdfService, ProccessingPdfService>();
+    builder.Services.AddTransient<IProccessingCVService, ProccessingCVService>();
 }
