@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using EFxceptions.Models.Exceptions;
+using FluentAssertions;
 using Microsoft.Data.SqlClient;
 using Moq;
 using VisionCraft.Models.CVs;
@@ -39,6 +40,41 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(expectedCVDependencyException)))
                     ,Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependecyExceptionOnAddIfDuplicateKeyErrorOccursAndLogItAsync()
+        {
+            //given
+            CV someCV = CreateRandomCV();
+            var duplicateKeyException = new DuplicateKeyException(GetRandomString());
+            var alreadExistCvException = new AlreadyExistCVException(duplicateKeyException);
+
+            var expectedCVDependecyValidationException =
+                new CVDependencyValidationException(alreadExistCvException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertCVAsync(someCV))
+                    .ThrowsAsync(duplicateKeyException);
+
+            //then
+            ValueTask<CV> addCVTask = this.cVService.AddCVAsync(someCV);
+
+            CVDependencyValidationException actualCVDependencyValidationException =
+                await Assert.ThrowsAsync<CVDependencyValidationException>(addCVTask.AsTask);
+
+            //then
+            actualCVDependencyValidationException.Should().BeEquivalentTo(expectedCVDependecyValidationException);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertCVAsync(someCV), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(expectedCVDependecyValidationException))),
+                    Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

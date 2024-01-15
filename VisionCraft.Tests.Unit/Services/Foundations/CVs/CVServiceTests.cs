@@ -32,6 +32,9 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
                 loggingBroker: loggingBrokerMock.Object);
         }
 
+        private string GetRandomString() =>
+            new MnemonicString().GetValue();
+
         private static SqlException GetSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
