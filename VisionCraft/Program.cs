@@ -2,6 +2,7 @@ using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.OpenAIs;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.OpenAIs;
+using VisionCraft.Services.Foundations.CVs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StorageBroker>();
 
 AddBrokers(builder);
+
+builder.Services.AddTransient<ICVService, CVService>();
 
 var app = builder.Build();
 

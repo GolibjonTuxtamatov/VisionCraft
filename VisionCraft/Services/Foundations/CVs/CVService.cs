@@ -23,5 +23,17 @@ namespace VisionCraft.Services.Foundations.CVs
                 return await this.storageBroker.InsertCVAsync(cv);
             });
 
+        public IQueryable<CV> RetrieveAllCVs() =>
+            this.storageBroker.SelectAllCVs();
+
+        public async ValueTask<CV> RetrieveCvByIdAsync(Guid id) =>
+            await this.storageBroker.SelectCVByIdAsync(id);
+
+        public async ValueTask<CV> RemoveCVAsync(Guid id)
+        {
+            CV foundCV = await this.storageBroker.SelectCVByIdAsync(id);
+
+            return await this.storageBroker.DeleteCVAsync(foundCV);
+        }
     }
 }

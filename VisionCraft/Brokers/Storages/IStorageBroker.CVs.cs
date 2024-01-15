@@ -7,5 +7,6 @@ namespace VisionCraft.Brokers.Storages
         ValueTask<CV> InsertCVAsync(CV cv);
         IQueryable<CV> SelectAllCVs();
         ValueTask<CV> SelectCVByIdAsync(Guid id);
+        ValueTask<CV> DeleteCVAsync(CV cv);
     }
 }
