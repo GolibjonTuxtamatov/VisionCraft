@@ -1,4 +1,5 @@
-﻿using VisionCraft.Models.CVs;
+﻿using Microsoft.Data.SqlClient;
+using VisionCraft.Models.CVs;
 using VisionCraft.Models.CVs.Exceptions;
 using Xeptions;
 
@@ -22,6 +23,13 @@ namespace VisionCraft.Services.Foundations.CVs
             {
                 throw CreateAndLogValidationException(invalidCVException);
             }
+            catch(SqlException sqlException)
+            {
+                var failedStorageCVException =
+                    new FailedStorageCVException(sqlException);
+
+                throw CreateAndLogCriticalException(failedStorageCVException);
+            }
         }
 
         private CVValidationException CreateAndLogValidationException(Xeption exception)
@@ -31,6 +39,15 @@ namespace VisionCraft.Services.Foundations.CVs
             this.loggingBroker.LogError(cvValidationException);
 
             return cvValidationException;
+        }
+
+        private CVDependencyException CreateAndLogCriticalException(Xeption exception)
+        {
+            var cVDependencyException = new CVDependencyException(exception);
+
+            this.loggingBroker.LogCritical(cVDependencyException);
+
+            return cVDependencyException;
         }
     }
 }
