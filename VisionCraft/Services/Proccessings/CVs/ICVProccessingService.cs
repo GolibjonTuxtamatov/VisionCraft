@@ -2,7 +2,7 @@
 
 namespace VisionCraft.Services.Proccessings.CVs
 {
-    public interface IProccessingCVService
+    public interface ICVProccessingService
     {
         ValueTask<CV> ProcAddCVAsync(CV cv);
         IQueryable<CV> ProcRetrieveAllCVs();

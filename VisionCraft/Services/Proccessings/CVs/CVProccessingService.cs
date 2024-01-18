@@ -3,14 +3,12 @@ using VisionCraft.Services.Foundations.CVs;
 
 namespace VisionCraft.Services.Proccessings.CVs
 {
-    public class ProccessingCVService : IProccessingCVService
+    public class CVProccessingService : ICVProccessingService
     {
         private readonly ICVService cVService;
 
-        public ProccessingCVService(ICVService cVService)
-        {
+        public CVProccessingService(ICVService cVService) =>
             this.cVService = cVService;
-        }
 
         public async ValueTask<CV> ProcAddCVAsync(CV cv) =>
             await this.cVService.AddCVAsync(cv);

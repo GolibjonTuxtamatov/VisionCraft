@@ -1,7 +1,4 @@
 ﻿using iText.Kernel.Pdf;
-using System.IO;
-using OpenAI_API.Chat;
-using iText.Kernel.Pdf.Canvas.Parser;
 
 namespace VisionCraft.Brokers.Pdfs
 {
@@ -9,13 +6,11 @@ namespace VisionCraft.Brokers.Pdfs
     {
         public async ValueTask<PdfDocument> ReadExtracPdfAsync(Stream pdfFile)
         {
-            using (PdfReader pdfReader = new PdfReader(pdfFile))
-            {
-                using (PdfDocument pdfDocument = new PdfDocument(pdfReader))
-                {
-                    return pdfDocument;
-                }
-            }
+            PdfReader pdfReader = new PdfReader(pdfFile);
+
+            PdfDocument pdfDocument = new PdfDocument(pdfReader);
+
+            return pdfDocument;
         }
     }
 }
