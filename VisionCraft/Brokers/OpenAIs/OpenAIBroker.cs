@@ -1,7 +1,6 @@
 ﻿using OpenAI_API;
 using OpenAI_API.Chat;
 using VisionCraft.Models.OpenAIs;
-using VisionCraft.Models.Requirements;
 
 namespace VisionCraft.Brokers.OpenAIs
 {
@@ -19,11 +18,11 @@ namespace VisionCraft.Brokers.OpenAIs
         }
 
 
-        public async ValueTask<ChatResult> EvaluateExtraCVAsync(Requirement requierment)
+        public async ValueTask<ChatResult> EvaluateExtraCVAsync(string[] requests)
         {
             var api = new OpenAIAPI(openAIConfiguration.SecretKey);
 
-            ChatResult result = await api.Chat.CreateChatCompletionAsync(requierment.Requirements);
+            ChatResult result = await api.Chat.CreateChatCompletionAsync(requests);
 
             return result;
         }

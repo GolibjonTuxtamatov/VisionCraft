@@ -33,7 +33,17 @@ namespace VisionCraft.Services.Foundations.CVs
         {
             CV foundCV = await this.storageBroker.SelectCVByIdAsync(id);
 
+            DeleteStaticCv(foundCV);
+
             return await this.storageBroker.DeleteCVAsync(foundCV);
+        }
+
+        private static void DeleteStaticCv(CV foundCV)
+        {
+            var fileInfo = new FileInfo(foundCV.CVPath);
+
+            if (fileInfo.Exists)
+                fileInfo.Delete();
         }
     }
 }

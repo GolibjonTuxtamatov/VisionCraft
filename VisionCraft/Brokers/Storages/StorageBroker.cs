@@ -36,6 +36,15 @@ namespace VisionCraft.Brokers.Storages
             return await broker.FindAsync<T>(@objectId);
         }
 
+        public async ValueTask<T> UpdateAsync<T>(T @object)
+        {
+            using var broker = new StorageBroker(this.configuration);
+            broker.Entry(@object).State = EntityState.Modified;
+            await broker.SaveChangesAsync();
+
+            return @object;
+        }
+
         public async ValueTask<T> DeleteAsync<T>(T @object)
         {
             using var broker = new StorageBroker(this.configuration);
