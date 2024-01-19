@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using RESTFulSense.Controllers;
 using VisionCraft.Models.Vacancies;
 using VisionCraft.Services.Foundations.Vacancies;
@@ -20,6 +20,7 @@ namespace VisionCraft.Controllers
             await this.vacancyService.AddVacancyAsync(vacancy);
 
         [HttpGet]
+        [EnableQuery]
         public ActionResult<IQueryable<Vacancy>> GetAllVacancies() =>
             Ok(this.vacancyService.RetrieveAllVacancies());
 

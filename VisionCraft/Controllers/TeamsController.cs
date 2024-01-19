@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using RESTFulSense.Controllers;
 using VisionCraft.Models.Teams;
 using VisionCraft.Services.Foundations.Teams;
@@ -15,6 +16,7 @@ namespace VisionCraft.Controllers
             this.teamService = teamService;
 
         [HttpGet]
+        [EnableQuery]
         public ActionResult<IQueryable<Team>> GetAllTeams() =>
             Ok(this.teamService.RetrieveAllTeams());
 
