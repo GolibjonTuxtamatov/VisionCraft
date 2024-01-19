@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNet.OData;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using RESTFulSense.Controllers;
 using VisionCraft.Models.CVs;
 using VisionCraft.Services.Foundations.CVs;

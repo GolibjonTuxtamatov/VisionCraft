@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using VisionCraft.Models.Vacancies;
-
-namespace VisionCraft.Models.Teams
+﻿namespace VisionCraft.Models.Teams
 {
     public class Team
     {

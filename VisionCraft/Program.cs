@@ -1,6 +1,5 @@
-using FluentAssertions.Common;
-using Microsoft.AspNetCore.OData;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.OData;
 using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.OpenAIs;
 using VisionCraft.Brokers.Pdfs;
