@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Controllers;
 using VisionCraft.Models.CVs;
@@ -16,6 +16,7 @@ namespace VisionCraft.Controllers
             this.cVService = cVService;
 
         [HttpGet]
+        [EnableQuery]
         public ActionResult<IQueryable<CV>> GetAllCVs() =>
             Ok(this.cVService.RetrieveAllCVs());
 

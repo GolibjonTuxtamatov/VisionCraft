@@ -1,4 +1,5 @@
 using FluentAssertions.Common;
+using Microsoft.AspNetCore.OData;
 using System.Text.Json.Serialization;
 using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.OpenAIs;
@@ -22,8 +23,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<OpenAIConfiguration>(builder.Configuration.GetSection("OpenAIConfiguration"));
 
-builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddControllers().AddJsonOptions(options =>
+                                                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
+                                .AddOData(options =>
+                                                    options.Select().Filter().Expand().OrderBy().OrderBy().Count().SetMaxTop(50));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

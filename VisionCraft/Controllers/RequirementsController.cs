@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Controllers;
 using VisionCraft.Models.Requirements;
 using VisionCraft.Services.Foundations.Requirements;
@@ -19,6 +20,7 @@ namespace VisionCraft.Controllers
             Created(await this.requirementService.AddRequirementAsync(requirement));
 
         [HttpGet]
+        [EnableQuery]
         public ActionResult<IQueryable<Requirement>> GetAllRequirements() =>
             Ok(this.requirementService.RetrieveAllRequirements());
 
