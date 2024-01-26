@@ -17,6 +17,12 @@ namespace VisionCraft.Services.Foundations.Pdfs
             {
                 throw CreateAndLogValidationException(nullpdfException);
             }
+            catch (Exception exception)
+            {
+                var failedServiceException = new FailedServiecException(exception);
+
+                throw CreateAndLogServiceException(failedServiceException);
+            }
         }
 
         private PdfValidationException CreateAndLogValidationException(Xeption exception)
@@ -25,6 +31,14 @@ namespace VisionCraft.Services.Foundations.Pdfs
             this.loggingBroker.LogError(pdfValidationException);
 
             return pdfValidationException;
+        }
+
+        private PdfServcviceException CreateAndLogServiceException(Xeption exception)
+        {
+            var pdfServiceException = new PdfServcviceException(exception);
+            this.loggingBroker.LogError(pdfServiceException);
+
+            return pdfServiceException;
         }
     }
 }
