@@ -6,7 +6,7 @@ using VisionCraft.Brokers.Pdfs;
 
 namespace VisionCraft.Services.Foundations.Pdfs
 {
-    public class PdfService : IPdfService
+    public partial class PdfService : IPdfService
     {
         private readonly IPdfBroker pdfBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -17,8 +17,10 @@ namespace VisionCraft.Services.Foundations.Pdfs
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<string> ReadExtracPdfAsync(Stream pdfFile)
+        public ValueTask<string> ReadExtracPdfAsync(Stream pdfFile) =>
+        TryCatch(async () =>
         {
+            ValidatePdfNotNull(pdfFile);
             var pdfDocument = await this.pdfBroker.ReadExtracPdfAsync(pdfFile);
 
             var pdfText = new StringBuilder();
@@ -29,6 +31,6 @@ namespace VisionCraft.Services.Foundations.Pdfs
             }
 
             return pdfText.ToString();
-        }
+        });
     }
 }
