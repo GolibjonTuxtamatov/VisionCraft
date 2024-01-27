@@ -60,6 +60,12 @@ namespace VisionCraft.Services.Foundations.CVs
 
                 throw CreateAndLogCriticalException(failedStorageCVException);
             }
+            catch(Exception serviceException)
+            {
+                var failedServiceException = new FailedServiceException(serviceException);
+
+                throw CreateAndLogServiceException(failedServiceException);
+            }
         }
 
         private CVValidationException CreateAndLogValidationException(Xeption exception)
