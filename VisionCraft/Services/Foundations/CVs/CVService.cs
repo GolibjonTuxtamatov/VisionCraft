@@ -24,7 +24,7 @@ namespace VisionCraft.Services.Foundations.CVs
             });
 
         public IQueryable<CV> RetrieveAllCVs() =>
-            throw new NotImplementedException();
+            this.storageBroker.SelectAllCVs();
 
         public async ValueTask<CV> RetrieveCvByIdAsync(Guid id) =>
             await this.storageBroker.SelectCVByIdAsync(id);
