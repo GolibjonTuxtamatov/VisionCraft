@@ -18,32 +18,18 @@ namespace VisionCraft.Services.Foundations.CVs
         }
 
         public ValueTask<CV> AddCVAsync(CV cv) =>
-            TryCatch(async () =>
-            {
-                ValidateOnAdd(cv);
-
-                return await this.storageBroker.InsertCVAsync(cv);
-            });
-
-        public IQueryable<CV> RetrieveAllCVs()
+        TryCatch(async () =>
         {
-            try
-            {
-                return this.storageBroker.SelectAllCVs();
-            }
-            catch (SqlException sqlException)
-            {
-                var failedStorageCVException =
-                    new FailedStorageCVException(sqlException);
+            ValidateOnAdd(cv);
 
-                var cVDependencyException =
-                    new CVDependencyException(failedStorageCVException);
+            return await this.storageBroker.InsertCVAsync(cv);
+        });
 
-                this.loggingBroker.LogCritical(cVDependencyException);
-
-                throw cVDependencyException;
-            }
-        }
+        public IQueryable<CV> RetrieveAllCVs() =>
+        TryCatch(() =>
+        {
+            return this.RetrieveAllCVs();
+        });
 
         public async ValueTask<CV> RetrieveCvByIdAsync(Guid id) =>
             await this.storageBroker.SelectCVByIdAsync(id);
