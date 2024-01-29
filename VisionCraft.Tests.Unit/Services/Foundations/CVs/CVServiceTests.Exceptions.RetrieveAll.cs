@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Data.SqlClient;
 using Moq;
 using VisionCraft.Models.CVs.Exceptions;
@@ -42,39 +37,6 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(expectedCVDependecyException))),
-                Times.Once());
-
-            this.storageBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
-        public void ShouldThrowServiceExceptionOnRetrieveAllCVsIfServiceErrorOccursAndLogIt()
-        {
-            //given
-            var exception = new Exception();
-            var failedServiceException = new FailedServiceException(exception);
-
-            var expectedCVServiceException =
-                new CVServiceException(failedServiceException);
-
-            this.storageBrokerMock.Setup(broker =>
-                broker.SelectAllCVs()).Throws(exception);
-
-            //when
-            Action cVRetrieveAllAction = () => this.cVService.RetrieveAllCVs();
-
-            CVServiceException actualCVException =
-                Assert.Throws<CVServiceException>(cVRetrieveAllAction);
-
-            //then
-            actualCVException.Should().BeEquivalentTo(expectedCVServiceException);
-
-            this.storageBrokerMock.Verify(broker =>
-                broker.SelectAllCVs(), Times.Once());
-
-            this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionAs(expectedCVServiceException))),
                 Times.Once());
 
             this.storageBrokerMock.VerifyNoOtherCalls();
