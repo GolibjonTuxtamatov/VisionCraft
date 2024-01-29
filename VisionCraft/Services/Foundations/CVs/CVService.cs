@@ -28,7 +28,7 @@ namespace VisionCraft.Services.Foundations.CVs
         public IQueryable<CV> RetrieveAllCVs() =>
         TryCatch(() =>
         {
-            return this.RetrieveAllCVs();
+            return this.storageBroker.SelectAllCVs();
         });
 
         public async ValueTask<CV> RetrieveCvByIdAsync(Guid id) =>
