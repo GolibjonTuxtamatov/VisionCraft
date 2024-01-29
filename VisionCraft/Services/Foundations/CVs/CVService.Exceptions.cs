@@ -9,6 +9,7 @@ namespace VisionCraft.Services.Foundations.CVs
     public partial class CVService
     {
         private delegate ValueTask<CV> ReturningCVFunction();
+        private delegate IQueryable<CV> ReturningCVsFunction();
 
         private async ValueTask<CV> TryCatch(ReturningCVFunction function)
         {
@@ -39,6 +40,27 @@ namespace VisionCraft.Services.Foundations.CVs
                 throw CreateAndLogDependencyValidationException(alreadExistCVException);
             }
             catch (Exception serviceException)
+            {
+                var failedServiceException = new FailedServiceException(serviceException);
+
+                throw CreateAndLogServiceException(failedServiceException);
+            }
+        }
+
+        private IQueryable<CV> TryCatch(ReturningCVsFunction returningCVsFunction)
+        {
+            try
+            {
+                return returningCVsFunction();
+            }
+            catch (SqlException sqlException)
+            {
+                var failedStorageCVException =
+                    new FailedStorageCVException(sqlException);
+
+                throw CreateAndLogCriticalException(failedStorageCVException);
+            }
+            catch(Exception serviceException)
             {
                 var failedServiceException = new FailedServiceException(serviceException);
 

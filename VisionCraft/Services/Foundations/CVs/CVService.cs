@@ -1,6 +1,8 @@
-﻿using VisionCraft.Brokers.Loggings;
+﻿using Microsoft.Data.SqlClient;
+using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.CVs;
+using VisionCraft.Models.CVs.Exceptions;
 
 namespace VisionCraft.Services.Foundations.CVs
 {
@@ -16,15 +18,18 @@ namespace VisionCraft.Services.Foundations.CVs
         }
 
         public ValueTask<CV> AddCVAsync(CV cv) =>
-            TryCatch(async () =>
-            {
-                ValidateOnAdd(cv);
+        TryCatch(async () =>
+        {
+            ValidateOnAdd(cv);
 
-                return await this.storageBroker.InsertCVAsync(cv);
-            });
+            return await this.storageBroker.InsertCVAsync(cv);
+        });
 
         public IQueryable<CV> RetrieveAllCVs() =>
-            this.storageBroker.SelectAllCVs();
+        TryCatch(() =>
+        {
+            return this.storageBroker.SelectAllCVs();
+        });
 
         public async ValueTask<CV> RetrieveCvByIdAsync(Guid id) =>
             await this.storageBroker.SelectCVByIdAsync(id);
