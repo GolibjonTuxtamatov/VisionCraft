@@ -33,11 +33,11 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
             actualCVdependencyException.Should().BeEquivalentTo(expectedCVDependecyException);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.SelectAllCVs(), Times.Once());
+                broker.SelectAllCVs(), Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(expectedCVDependecyException))),
-                Times.Once());
+                Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
