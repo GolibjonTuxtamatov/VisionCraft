@@ -49,23 +49,7 @@ namespace VisionCraft.Services.Foundations.CVs
 
         private IQueryable<CV> TryCatch(ReturningCVsFunction returningCVsFunction)
         {
-            try
-            {
-                return returningCVsFunction();
-            }
-            catch (SqlException sqlException)
-            {
-                var failedStorageCVException =
-                    new FailedStorageCVException(sqlException);
-
-                throw CreateAndLogCriticalException(failedStorageCVException);
-            }
-            catch (Exception serviceException)
-            {
-                var failedServiceException = new FailedServiceException(serviceException);
-
-                throw CreateAndLogServiceException(failedServiceException);
-            }
+            return returningCVsFunction();
         }
 
         private CVValidationException CreateAndLogValidationException(Xeption exception)
