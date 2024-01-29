@@ -1,6 +1,8 @@
-﻿using VisionCraft.Brokers.Loggings;
+﻿using Microsoft.Data.SqlClient;
+using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.CVs;
+using VisionCraft.Models.CVs.Exceptions;
 
 namespace VisionCraft.Services.Foundations.CVs
 {
