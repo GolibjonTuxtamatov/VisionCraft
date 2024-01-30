@@ -1,6 +1,7 @@
 ﻿using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.Teams;
+using VisionCraft.Models.Teams.Exceptions;
 
 namespace VisionCraft.Services.Foundations.Teams
 {
@@ -15,8 +16,28 @@ namespace VisionCraft.Services.Foundations.Teams
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<Team> AddTeamAsync(Team team) =>
-            await this.storageBroker.InsertTeamAsync(team);
+        public async ValueTask<Team> AddTeamAsync(Team team)
+        {
+            try
+            {
+
+                if (team == null)
+                    throw new NullTeamException();
+
+                return await this.storageBroker.InsertTeamAsync(team);
+
+            }
+            catch (NullTeamException nullTeamException)
+            {
+                var teamValidationException =
+                    new TeamValidationException(nullTeamException);
+
+                this.loggingBroker.LogError(teamValidationException);
+
+                throw teamValidationException;
+            }
+
+        }
 
         public IQueryable<Team> RetrieveAllTeams() =>
             this.storageBroker.SelectAllTeams();
