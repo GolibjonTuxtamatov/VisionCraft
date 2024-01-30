@@ -5,7 +5,7 @@ using VisionCraft.Models.Teams.Exceptions;
 
 namespace VisionCraft.Services.Foundations.Teams
 {
-    public class TeamService : ITeamService
+    public partial class TeamService : ITeamService
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -16,28 +16,12 @@ namespace VisionCraft.Services.Foundations.Teams
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<Team> AddTeamAsync(Team team)
+        public ValueTask<Team> AddTeamAsync(Team team) =>
+        TryCatch(async () =>
         {
-            try
-            {
-
-                if (team == null)
-                    throw new NullTeamException();
-
-                return await this.storageBroker.InsertTeamAsync(team);
-
-            }
-            catch (NullTeamException nullTeamException)
-            {
-                var teamValidationException =
-                    new TeamValidationException(nullTeamException);
-
-                this.loggingBroker.LogError(teamValidationException);
-
-                throw teamValidationException;
-            }
-
-        }
+            ValidateNotNull(team);
+            return await this.storageBroker.InsertTeamAsync(team);
+        });
 
         public IQueryable<Team> RetrieveAllTeams() =>
             this.storageBroker.SelectAllTeams();
