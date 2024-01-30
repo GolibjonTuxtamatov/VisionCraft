@@ -1,9 +1,12 @@
-﻿using Moq;
+﻿using System.Linq.Expressions;
+using Moq;
 using Tynamix.ObjectFiller;
 using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.Teams;
+using VisionCraft.Models.Teams.Exceptions;
 using VisionCraft.Services.Foundations.Teams;
+using Xeptions;
 
 namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
 {
@@ -28,5 +31,8 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
 
         private static Filler<Team> CreateFiller() =>
             new Filler<Team>();
+
+        private Expression<Func<Exception, bool>> SameExceptionAs(Xeption exception) =>
+            actualException => actualException.SameExceptionAs(exception);
     }
 }
