@@ -43,5 +43,58 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task ShouldThrowvalidationExceptionOnAddIfTeamIsInvalidAndLogItAsync(string invalidText)
+        {
+            //given
+            Team invalidTeam = new Team
+            {
+                Name = invalidText,
+            };
+
+            var invalidTeamException = new InvalidTeamException();
+
+            invalidTeamException.AddData(
+                key: nameof(Team.Id),
+                values: "Id is required");
+
+            invalidTeamException.AddData(
+                key: nameof(Team.Name),
+                values: "Text is required");
+
+            invalidTeamException.AddData(
+                key: nameof(Team.Email),
+                values: "Text is required");
+
+            invalidTeamException.AddData(
+                key: nameof(Team.Password),
+                values: "Text is required");
+
+            var expectedTeamValidationeException =
+                new TeamValidationException(invalidTeamException);
+            //when
+            ValueTask<Team> addTeamTask = this.teamService.AddTeamAsync(invalidTeam);
+
+            TeamValidationException actualTeamValidationException =
+                await Assert.ThrowsAsync<TeamValidationException>(addTeamTask.AsTask);
+
+            //then
+            actualTeamValidationException.Should().BeEquivalentTo(expectedTeamValidationeException);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(expectedTeamValidationeException))),
+                    Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertTeamAsync(It.IsAny<Team>()),
+                    Times.Never);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
