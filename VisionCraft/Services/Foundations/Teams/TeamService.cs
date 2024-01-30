@@ -16,7 +16,7 @@ namespace VisionCraft.Services.Foundations.Teams
         }
 
         public async ValueTask<Team> AddTeamAsync(Team team) =>
-            throw new NotImplementedException();
+            await this.storageBroker.InsertTeamAsync(team);
 
         public IQueryable<Team> RetrieveAllTeams() =>
             this.storageBroker.SelectAllTeams();
