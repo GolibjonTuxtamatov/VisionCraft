@@ -89,5 +89,43 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccursAndLogItAsync()
+        {
+            // given
+            Team someTeam = CreateRandomTeam();
+            var serviceException = new Exception();
+
+            var failedTeamServiceException =
+                new FailedTeamServiceException(serviceException);
+
+            var expectedTeamServiceException =
+                new TeamServiceException(failedTeamServiceException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertTeamAsync(someTeam))
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<Team> addTeamTask =
+                this.teamService.AddTeamAsync(someTeam);
+
+            TeamServiceException actualTeamServiceException =
+                await Assert.ThrowsAsync<TeamServiceException>(addTeamTask.AsTask);
+
+            // then
+            actualTeamServiceException.Should().BeEquivalentTo(expectedTeamServiceException);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertTeamAsync(someTeam), Times.Never);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedTeamServiceException))), Times.Once);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
