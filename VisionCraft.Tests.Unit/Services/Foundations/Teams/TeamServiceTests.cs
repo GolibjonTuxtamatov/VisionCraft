@@ -1,4 +1,6 @@
 ﻿using System.Linq.Expressions;
+using System.Runtime.Serialization;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using VisionCraft.Brokers.Loggings;
@@ -34,5 +36,8 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
 
         private Expression<Func<Exception, bool>> SameExceptionAs(Xeption exception) =>
             actualException => actualException.SameExceptionAs(exception);
+
+        private SqlException CreateSqlException() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
     }
 }
