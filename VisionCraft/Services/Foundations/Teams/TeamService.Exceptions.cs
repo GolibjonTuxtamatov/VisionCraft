@@ -8,15 +8,19 @@ namespace VisionCraft.Services.Foundations.Teams
     {
         private delegate ValueTask<Team> ReturningTeamFunction();
 
-        private ValueTask<Team> TryCatch(ReturningTeamFunction returningTeamFunction)
+        private async ValueTask<Team> TryCatch(ReturningTeamFunction returningTeamFunction)
         {
             try
             {
-                return returningTeamFunction();
+                return await returningTeamFunction();
             }
             catch (NullTeamException nullTeamException)
             {
                 throw CreateAndLogValidationException(nullTeamException);
+            }
+            catch (InvalidTeamException invalidTeamException)
+            {
+                throw CreateAndLogValidationException(invalidTeamException);
             }
         }
 

@@ -19,7 +19,7 @@ namespace VisionCraft.Services.Foundations.Teams
         public ValueTask<Team> AddTeamAsync(Team team) =>
         TryCatch(async () =>
         {
-            ValidateNotNull(team);
+            ValidateOnAdd(team);
             return await this.storageBroker.InsertTeamAsync(team);
         });
 
