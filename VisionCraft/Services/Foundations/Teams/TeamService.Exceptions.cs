@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using EFxceptions.Models.Exceptions;
+using Microsoft.Data.SqlClient;
 using VisionCraft.Models.Teams;
 using VisionCraft.Models.Teams.Exceptions;
 using Xeptions;
@@ -30,6 +31,13 @@ namespace VisionCraft.Services.Foundations.Teams
 
                 throw CreateAndLogDependecyException(failedTeamStorageException);
             }
+            catch (DuplicateKeyException duplicateKeyException)
+            {
+                var alreadyExistsTeamException =
+                    new AlreadyExistsTeamException(duplicateKeyException);
+
+                throw CreateAndLogDependecyValidationException(alreadyExistsTeamException);
+            }
         }
 
         private TeamValidationException CreateAndLogValidationException(Xeption exception)
@@ -49,6 +57,14 @@ namespace VisionCraft.Services.Foundations.Teams
             this.loggingBroker.LogCritical(teamDependencyException);
 
             return teamDependencyException;
+        }
+
+        private TeamDependencyValidationException CreateAndLogDependecyValidationException(Xeption exception)
+        {
+            var teamDependencyValidationException = new TeamDependencyValidationException(exception);
+            this.loggingBroker.LogError(teamDependencyValidationException);
+            
+            return teamDependencyValidationException;
         }
     }
 }

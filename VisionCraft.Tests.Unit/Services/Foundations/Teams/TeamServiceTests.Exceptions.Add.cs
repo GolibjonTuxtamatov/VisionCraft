@@ -63,6 +63,10 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
             var alreadyExistsTeamException =
                 new AlreadyExistsTeamException(duplicateKeyException);
 
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertTeamAsync(someTeam))
+                    .ThrowsAsync(duplicateKeyException);
+
             var expectedTeamDependencyValidationException =
                 new TeamDependencyValidationException(alreadyExistsTeamException);
 
