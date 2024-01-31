@@ -38,6 +38,12 @@ namespace VisionCraft.Services.Foundations.Teams
 
                 throw CreateAndLogDependecyValidationException(alreadyExistsTeamException);
             }
+            catch (Exception exception)
+            {
+                var failedTeamServiceException = new FailedTeamServiceException(exception);
+
+                throw CreateAndLogServiceException(failedTeamServiceException);
+            }
         }
 
         private TeamValidationException CreateAndLogValidationException(Xeption exception)
@@ -65,6 +71,14 @@ namespace VisionCraft.Services.Foundations.Teams
             this.loggingBroker.LogError(teamDependencyValidationException);
             
             return teamDependencyValidationException;
+        }
+
+        private TeamServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var teamServiceException = new TeamServiceException(exception);
+            this.loggingBroker.LogError(teamServiceException);
+
+            return teamServiceException;
         }
     }
 }

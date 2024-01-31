@@ -118,7 +118,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
             actualTeamServiceException.Should().BeEquivalentTo(expectedTeamServiceException);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertTeamAsync(someTeam), Times.Never);
+                broker.InsertTeamAsync(someTeam), Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
