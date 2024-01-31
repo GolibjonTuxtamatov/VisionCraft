@@ -39,12 +39,12 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
             actualTeamDependencyException.Should().BeEquivalentTo(expectedTeamDependencyException);
 
 
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertTeamAsync(someTeam), Times.Once);
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(
                     expectedTeamDependencyException))), Times.Once);
-
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertTeamAsync(It.IsAny<Team>()), Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();

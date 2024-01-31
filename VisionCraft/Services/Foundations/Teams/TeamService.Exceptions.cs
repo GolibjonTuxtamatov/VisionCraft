@@ -1,4 +1,5 @@
-﻿using VisionCraft.Models.Teams;
+﻿using Microsoft.Data.SqlClient;
+using VisionCraft.Models.Teams;
 using VisionCraft.Models.Teams.Exceptions;
 using Xeptions;
 
@@ -22,6 +23,13 @@ namespace VisionCraft.Services.Foundations.Teams
             {
                 throw CreateAndLogValidationException(invalidTeamException);
             }
+            catch(SqlException sqlException)
+            {
+                var failedTeamStorageException =
+                    new FailedTeamStorageException(sqlException);
+
+                throw CreateAndLogDependecyException(failedTeamStorageException);
+            }
         }
 
         private TeamValidationException CreateAndLogValidationException(Xeption exception)
@@ -33,6 +41,14 @@ namespace VisionCraft.Services.Foundations.Teams
             this.loggingBroker.LogError(teamValidationException);
 
             return teamValidationException;
+        }
+
+        private TeamDependencyException CreateAndLogDependecyException(Xeption exception)
+        {
+            var teamDependencyException = new TeamDependencyException(exception);
+            this.loggingBroker.LogCritical(teamDependencyException);
+
+            return teamDependencyException;
         }
     }
 }
