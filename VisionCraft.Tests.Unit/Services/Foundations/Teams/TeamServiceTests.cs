@@ -39,5 +39,8 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
 
         private SqlException CreateSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+
+        private string GetRandomString() =>
+            new MnemonicString().GetValue();
     }
 }
