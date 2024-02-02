@@ -96,5 +96,36 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnAddIfEmailIsInvalidAndLogItAsync()
+        {
+            //given
+            Team invaidTeam = CreateRandomTeam();
+
+            var invalidTeamException = new InvalidTeamException();
+
+            invalidTeamException.AddData(
+                key: nameof(Team.Email),
+                values: "Email is invalid.");
+
+            var expectedTeamValidationException =
+                new TeamValidationException(invalidTeamException);
+
+            //when
+            ValueTask<Team> addTeamTask = this.teamService.AddTeamAsync(invaidTeam);
+
+            TeamValidationException actualTeamValidationException =
+                await Assert.ThrowsAsync<TeamValidationException>(addTeamTask.AsTask);
+
+            //then
+            actualTeamValidationException.Should().BeEquivalentTo(expectedTeamValidationException);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(expectedTeamValidationException))), Times.Once);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
