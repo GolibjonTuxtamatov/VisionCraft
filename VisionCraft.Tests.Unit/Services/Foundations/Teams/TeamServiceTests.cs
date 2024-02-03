@@ -35,7 +35,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         {
             var filler = new Filler<Team>();
 
-            string randomEmail = new MnemonicString().GetValue() + "@gmail.com";
+            string randomEmail = GetRandomString() + "@gmail.com";
 
             filler.Setup().OnProperty(team =>
                 team.Email).Use(randomEmail);
@@ -49,7 +49,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         private SqlException CreateSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
-        private string GetRandomString() =>
+        private static string GetRandomString() =>
             new MnemonicString().GetValue();
     }
 }

@@ -102,6 +102,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         {
             //given
             Team invaidTeam = CreateRandomTeam();
+            invaidTeam.Email = GetRandomString();
 
             var invalidTeamException = new InvalidTeamException();
 
