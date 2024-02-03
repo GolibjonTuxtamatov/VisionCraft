@@ -31,8 +31,17 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         private static Team CreateRandomTeam() =>
             CreateFiller().Create();
 
-        private static Filler<Team> CreateFiller() =>
-            new Filler<Team>();
+        private static Filler<Team> CreateFiller()
+        {
+            var filler = new Filler<Team>();
+
+            string randomEmail = GetRandomString() + "@gmail.com";
+
+            filler.Setup().OnProperty(team =>
+                team.Email).Use(randomEmail);
+
+            return filler;
+        }
 
         private Expression<Func<Exception, bool>> SameExceptionAs(Xeption exception) =>
             actualException => actualException.SameExceptionAs(exception);
@@ -40,7 +49,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         private SqlException CreateSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
-        private string GetRandomString() =>
+        private static string GetRandomString() =>
             new MnemonicString().GetValue();
     }
 }
