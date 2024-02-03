@@ -35,8 +35,10 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         {
             var filler = new Filler<Team>();
 
+            string randomEmail = new MnemonicString().GetValue() + "@gmail.com";
+
             filler.Setup().OnProperty(team =>
-                team.Email + "@gmail.com");
+                team.Email).Use(randomEmail);
 
             return filler;
         }

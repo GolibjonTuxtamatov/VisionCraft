@@ -16,8 +16,11 @@ namespace VisionCraft.Services.Foundations.Teams
                 (Rule: IsInvalid(team.Id), Parameter: nameof(Team.Id)),
                 (Rule: IsInvalid(team.Name), Parameter: nameof(Team.Name)),
                 (Rule: IsInvalid(team.Email), Parameter: nameof(Team.Email)),
-                (Rule: IsInvalidEmail(team.Email), Parameter: nameof(Team.Email)),
                 (Rule: IsInvalid(team.Password), Parameter: nameof(Team.Password)));
+
+
+            Validate(
+                (Rule: IsInvalidEmail(team.Email), Parameter: nameof(Team.Email)));
         }
 
         private static void ValidateNotNull(Team team)
@@ -40,11 +43,11 @@ namespace VisionCraft.Services.Foundations.Teams
 
         private static dynamic IsInvalidEmail(string text) => new
         {
-            Condition = !IsValidEmail(text),
+            Condition = !ValidateEmail(text),
             Message = "Email is invalid."
         };
 
-        private static bool IsValidEmail(string email)
+        private static bool ValidateEmail(string email)
         {
             var rgx = new Regex("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
             var match = rgx.Match(email);

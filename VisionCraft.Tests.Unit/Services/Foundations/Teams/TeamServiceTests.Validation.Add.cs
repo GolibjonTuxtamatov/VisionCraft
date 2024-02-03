@@ -48,7 +48,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task ShouldThrowvalidationExceptionOnAddIfTeamIsInvalidAndLogItAsync(string invalidText)
+        public async Task ShouldThrowValidationExceptionOnAddIfTeamIsInvalidAndLogItAsync(string invalidText)
         {
             //given
             Team invalidTeam = new Team
