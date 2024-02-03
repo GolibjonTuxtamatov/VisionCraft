@@ -31,8 +31,15 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.Teams
         private static Team CreateRandomTeam() =>
             CreateFiller().Create();
 
-        private static Filler<Team> CreateFiller() =>
-            new Filler<Team>();
+        private static Filler<Team> CreateFiller()
+        {
+            var filler = new Filler<Team>();
+
+            filler.Setup().OnProperty(team =>
+                team.Email + "@gmail.com");
+
+            return filler;
+        }
 
         private Expression<Func<Exception, bool>> SameExceptionAs(Xeption exception) =>
             actualException => actualException.SameExceptionAs(exception);
