@@ -1,5 +1,9 @@
+using System.Text;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.OpenAIs;
 using VisionCraft.Brokers.Pdfs;
@@ -28,9 +32,29 @@ builder.Services.AddControllers().AddJsonOptions(options =>
                                                     options.Select().Filter().Expand().OrderBy().OrderBy().Count().SetMaxTop(50));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2",new OpenApiSecurityScheme
+    {
+        Description = "Standart Authorization header using the Bearer scheme (\"bearer {token} \")",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+});
 
 builder.Services.AddDbContext<StorageBroker>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        });
 
 AddBrokers(builder);
 AddServices(builder);

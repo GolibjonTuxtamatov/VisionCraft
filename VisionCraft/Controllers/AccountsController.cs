@@ -19,7 +19,9 @@ namespace VisionCraft.Controllers
             Created(await this.teamService.AddTeamAsync(team));
 
         [HttpPost("login")]
-        public async ValueTask<IActionResult> LogIn() =>
-            throw new NotImplementedException();
+        public async ValueTask<ActionResult<string>> LogIn(string username,string password)
+        {
+
+        }
     }
 }
