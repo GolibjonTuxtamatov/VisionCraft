@@ -26,6 +26,9 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
             this.teamSecurityConfigurations = teamSecurityConfiguration;
         }
 
+        public async ValueTask<Team> AddTeamAsync(Team team) =>
+            await this.teamService.AddTeamAsync(team);
+
         public async ValueTask<string> GetTokenAsync(string email, string password)
         {
             Team maybeTeam = GetTeamByEmailAndPassword(email, password);
