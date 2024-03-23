@@ -11,6 +11,7 @@ using VisionCraft.Services.Foundations.OpenAIs;
 using VisionCraft.Services.Foundations.Pdfs;
 using VisionCraft.Services.Foundations.Requirements;
 using VisionCraft.Services.Foundations.Teams;
+using VisionCraft.Services.Foundations.Tokens;
 using VisionCraft.Services.Foundations.Vacancies;
 using VisionCraft.Services.Orchestrations.CVOrchestrationService;
 using VisionCraft.Services.Proccessings.CVs;
@@ -67,6 +68,7 @@ static void AddServices(WebApplicationBuilder builder)
     builder.Services.AddTransient<IOpenAIService, OpenAIService>();
     builder.Services.AddTransient<IVacancyService, VacancyService>();
     builder.Services.AddTransient<IRequirementService, RequirementService>();
+    builder.Services.AddTransient<ITeamSecurityService, TeamSecurityService>();
 
     // Proccesing services
     builder.Services.AddTransient<ICVProccessingService, CVProccessingService>();
