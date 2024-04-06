@@ -9,21 +9,19 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
 {
     public class TeamOrchestrstionService : ITeamOrchestrstionService
     {
-        private readonly ITeamSecurityService securityService;
+        private readonly ISecurityService securityService;
         private readonly ITeamService teamService;
         private readonly ILoggingBroker loggingBroker;
-        private readonly ITeamSecurityConfigurations teamSecurityConfigurations;
 
         public TeamOrchestrstionService(
-            ITeamSecurityService securityService, 
+            ISecurityService securityService, 
             ITeamService teamService, 
             ILoggingBroker loggingBroker,
-            ITeamSecurityConfigurations teamSecurityConfiguration)
+            ISecurityConfigurations teamSecurityConfiguration)
         {
             this.securityService = securityService;
             this.teamService = teamService;
             this.loggingBroker = loggingBroker;
-            this.teamSecurityConfigurations = teamSecurityConfiguration;
         }
 
         public async ValueTask<Team> AddTeamAsync(Team team) =>
@@ -33,7 +31,7 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
         {
             Team maybeTeam = GetTeamByEmailAndPassword(email, password);
 
-            string token = await this.teamSecurityConfigurations.CreateTeamToken(maybeTeam);
+            string token = await this.securityService.CreateTokenAsync(maybeTeam);
 
             return token;
         }

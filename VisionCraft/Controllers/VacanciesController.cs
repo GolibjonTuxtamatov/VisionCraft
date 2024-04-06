@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using RESTFulSense.Controllers;
 using VisionCraft.Models.Vacancies;
@@ -8,6 +9,7 @@ namespace VisionCraft.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VacanciesController : RESTFulController
     {
         private readonly IVacancyService vacancyService;
