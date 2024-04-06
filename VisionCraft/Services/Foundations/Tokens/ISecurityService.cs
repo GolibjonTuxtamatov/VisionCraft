@@ -2,7 +2,7 @@
 
 namespace VisionCraft.Services.Foundations.Tokens
 {
-    public interface ITeamSecurityService
+    public interface ISecurityService
     {
         ValueTask<string> CreateTokenAsync(Team team);
     }
