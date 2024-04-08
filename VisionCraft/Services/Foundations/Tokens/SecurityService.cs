@@ -9,7 +9,7 @@ namespace VisionCraft.Services.Foundations.Tokens
         private readonly ISecurityConfigurations teamSecurityConfigurations;
         private readonly ILoggingBroker loggingBroker;
 
-        public SecurityService(ISecurityConfigurations teamSecurityConfigurations,ILoggingBroker loggingBroker)
+        public SecurityService(ISecurityConfigurations teamSecurityConfigurations, ILoggingBroker loggingBroker)
         {
             this.teamSecurityConfigurations = teamSecurityConfigurations;
             this.loggingBroker = loggingBroker;

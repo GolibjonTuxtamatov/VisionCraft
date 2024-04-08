@@ -1,7 +1,6 @@
 ﻿using VisionCraft.Brokers.Loggings;
 using VisionCraft.Brokers.Storages;
 using VisionCraft.Models.Teams;
-using VisionCraft.Models.Teams.Exceptions;
 
 namespace VisionCraft.Services.Foundations.Teams
 {

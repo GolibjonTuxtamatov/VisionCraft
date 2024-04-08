@@ -24,7 +24,7 @@ namespace VisionCraft.Services.Foundations.Teams
             {
                 throw CreateAndLogValidationException(invalidTeamException);
             }
-            catch(SqlException sqlException)
+            catch (SqlException sqlException)
             {
                 var failedTeamStorageException =
                     new FailedTeamStorageException(sqlException);
@@ -69,7 +69,7 @@ namespace VisionCraft.Services.Foundations.Teams
         {
             var teamDependencyValidationException = new TeamDependencyValidationException(exception);
             this.loggingBroker.LogError(teamDependencyValidationException);
-            
+
             return teamDependencyValidationException;
         }
 

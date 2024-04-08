@@ -1,6 +1,5 @@
 ﻿
 using VisionCraft.Brokers.Loggings;
-using VisionCraft.Brokers.Tokens;
 using VisionCraft.Models.Teams;
 using VisionCraft.Services.Foundations.Teams;
 using VisionCraft.Services.Foundations.Tokens;
@@ -14,10 +13,9 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
         private readonly ILoggingBroker loggingBroker;
 
         public TeamOrchestrstionService(
-            ISecurityService securityService, 
-            ITeamService teamService, 
-            ILoggingBroker loggingBroker,
-            ISecurityConfigurations teamSecurityConfiguration)
+            ISecurityService securityService,
+            ITeamService teamService,
+            ILoggingBroker loggingBroker)
         {
             this.securityService = securityService;
             this.teamService = teamService;
