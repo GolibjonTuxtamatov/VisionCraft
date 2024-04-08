@@ -1,23 +1,21 @@
 ﻿
 using VisionCraft.Brokers.Loggings;
-using VisionCraft.Brokers.Tokens;
 using VisionCraft.Models.Teams;
 using VisionCraft.Services.Foundations.Teams;
 using VisionCraft.Services.Foundations.Tokens;
 
 namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
 {
-    public class TeamOrchestrstionService : ITeamOrchestrstionService
+    public partial class TeamOrchestrstionService : ITeamOrchestrstionService
     {
         private readonly ISecurityService securityService;
         private readonly ITeamService teamService;
         private readonly ILoggingBroker loggingBroker;
 
         public TeamOrchestrstionService(
-            ISecurityService securityService, 
-            ITeamService teamService, 
-            ILoggingBroker loggingBroker,
-            ISecurityConfigurations teamSecurityConfiguration)
+            ISecurityService securityService,
+            ITeamService teamService,
+            ILoggingBroker loggingBroker)
         {
             this.securityService = securityService;
             this.teamService = teamService;
@@ -29,7 +27,11 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
 
         public async ValueTask<string> GetTokenAsync(string email, string password)
         {
+            ValidateEmailAndPassword(email, password);
+
             Team maybeTeam = GetTeamByEmailAndPassword(email, password);
+
+            ValidateNotNull(maybeTeam);
 
             string token = await this.securityService.CreateTokenAsync(maybeTeam);
 

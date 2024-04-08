@@ -60,7 +60,7 @@ namespace VisionCraft.Services.Foundations.CVs
 
                 throw CreateAndLogCriticalException(failedStorageCVException);
             }
-            catch(Exception serviceException)
+            catch (Exception serviceException)
             {
                 var failedServiceException = new FailedServiceException(serviceException);
 

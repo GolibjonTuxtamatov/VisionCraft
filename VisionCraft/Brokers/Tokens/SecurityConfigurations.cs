@@ -1,7 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using VisionCraft.Models.Teams;
 using VisionCraft.Models.Tokens;
 
@@ -14,7 +14,7 @@ namespace VisionCraft.Brokers.Tokens
         public SecurityConfigurations(IConfiguration configuration)
         {
             this.tokenConfiguration = new TokenConfiguration();
-            configuration.Bind("JwtSettings",this.tokenConfiguration);
+            configuration.Bind("JwtSettings", this.tokenConfiguration);
         }
 
         public async ValueTask<string> CreateToken(Team team)

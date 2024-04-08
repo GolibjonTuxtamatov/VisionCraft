@@ -39,7 +39,7 @@ namespace VisionCraft.Tests.Unit.Services.Foundations.CVs
             CreateFiller().Create();
 
         private static int GetRandomNumber() =>
-            new Random().Next(2,10);
+            new Random().Next(2, 10);
 
         private static IQueryable<CV> CreateRandomCVs() =>
             CreateFiller().Create(GetRandomNumber()).AsQueryable();

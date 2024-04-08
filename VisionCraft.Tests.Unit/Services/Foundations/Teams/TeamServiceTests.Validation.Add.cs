@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using VisionCraft.Models.Teams;
 using VisionCraft.Models.Teams.Exceptions;
