@@ -17,6 +17,10 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
             {
                 throw CreateAndLogValidationException(invalidTeamException);
             }
+            catch (NullTeamException nullTeamException)
+            {
+                throw CreateAndLogValidationException(nullTeamException);
+            }
         }
 
         private Xeption CreateAndLogValidationException(Xeption exception)

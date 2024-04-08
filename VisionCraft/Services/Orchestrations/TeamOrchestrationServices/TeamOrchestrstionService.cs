@@ -31,6 +31,8 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
 
             Team maybeTeam = GetTeamByEmailAndPassword(email, password);
 
+            ValidateNotNull(maybeTeam);
+
             string token = await this.securityService.CreateTokenAsync(maybeTeam);
 
             return token;

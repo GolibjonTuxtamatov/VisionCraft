@@ -7,6 +7,12 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
 {
     public partial class TeamOrchestrstionService
     {
+        private void ValidateNotNull(Team maybeTeam)
+        {
+            if (maybeTeam == null)
+                throw new NullTeamException();
+        }
+
         private void ValidateEmailAndPassword(string email, string password)
         {
             Validate(
