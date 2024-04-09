@@ -8,7 +8,7 @@ namespace VisionCraft.Services.Foundations.Teams
     public partial class TeamService
     {
 
-        private static void ValidateOnAdd(Team team)
+        private void ValidateOnAdd(Team team)
         {
             ValidateNotNull(team);
 
@@ -23,7 +23,7 @@ namespace VisionCraft.Services.Foundations.Teams
                 (Rule: IsInvalidEmail(team.Email), Parameter: nameof(Team.Email)));
 
             Validate(
-                (Rule:))
+                (Rule: IsBookedEmail(team.Email), Parameter: nameof(Team.Email)));
         }
 
         private static void ValidateNotNull(Team team)
