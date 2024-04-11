@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Data;
+using System.Text.RegularExpressions;
 using VisionCraft.Models.Teams;
 using VisionCraft.Models.Teams.Exceptions;
 
@@ -7,7 +8,7 @@ namespace VisionCraft.Services.Foundations.Teams
     public partial class TeamService
     {
 
-        private static void ValidateOnAdd(Team team)
+        private void ValidateOnAdd(Team team)
         {
             ValidateNotNull(team);
 
