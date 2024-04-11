@@ -21,9 +21,6 @@ namespace VisionCraft.Services.Foundations.Teams
 
             Validate(
                 (Rule: IsInvalidEmail(team.Email), Parameter: nameof(Team.Email)));
-
-            Validate(
-                (Rule: IsBookedEmail(team.Email), Parameter: nameof(Team.Email)));
         }
 
         private static void ValidateNotNull(Team team)
@@ -56,22 +53,6 @@ namespace VisionCraft.Services.Foundations.Teams
             var match = rgx.Match(email);
 
             if (match.Success)
-                return true;
-            else return false;
-        }
-
-        private dynamic IsBookedEmail(string email) => new
-        {
-            Condition = DoeasExistEmail(email),
-            Message = "Email has alread booked"
-        };
-
-        private bool DoeasExistEmail(string email)
-        {
-            Team maybeTeam = this.storageBroker.SelectAllTeams()
-                                                .FirstOrDefault(team => team.Email == email);
-
-            if(maybeTeam == null)
                 return true;
             else return false;
         }

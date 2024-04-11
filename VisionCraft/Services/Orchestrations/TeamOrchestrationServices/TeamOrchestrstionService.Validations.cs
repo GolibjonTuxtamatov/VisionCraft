@@ -18,6 +18,9 @@ namespace VisionCraft.Services.Orchestrations.TeamOrchestrationServices
             Validate(
                 (Rule: IsInvalid(email), Parameter: nameof(Team.Email)),
                 (Rule: IsInvalid(password), Parameter: nameof(Team.Password)));
+
+            Validate(
+                (Rule: IsInvalidEmail(email), Parameter: nameof(Team.Email)));
         }
 
         private static dynamic IsInvalid(string text) => new
